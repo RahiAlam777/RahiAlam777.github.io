@@ -1,0 +1,32 @@
+.image-slide .slick-slide {
+  height: 200px;
+  margin-right: 20px;
+  text-align: center;
+  /*     &:nth-child(2n) {
+      background: #bbb;
+    }
+    
+    &:nth-child(2n + 1) {
+      background: #eee;
+    }
+    
+ */
+}
+.image-slide .slick-slide.one {
+  background-image: url('http://lorempixel.com/400/200/nightlife/1/');
+}
+.image-slide .slick-slide.two {
+  background-image: url('http://lorempixel.com/400/200/nightlife/2/');
+}
+.image-slide .slick-slide.three {
+  background-image: url('http://lorempixel.com/400/200/nightlife/3/');
+}
+.image-slide .slick-slide.four {
+  background-image: url('http://lorempixel.com/400/200/nightlife/4/');
+}
+.image-slide .slick-slide.five {
+  background-image: url('http://lorempixel.com/400/200/nightlife/5/');
+}
+.image-slide .slick-slide.six {
+  background-image: url('http://lorempixel.com/400/200/nightlife/6/');
+}
