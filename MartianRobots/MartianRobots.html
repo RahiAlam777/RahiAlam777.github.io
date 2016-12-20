@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Martian Robots</title>
+<style>
+label { display: inline-block; width: 130px; text-align: right; }
+</style>
+</head>
+<body>
+
+<form id="inputform" >
+  <label>Top Right Co-ords:</label> 
+  <input id="topright" type="text" name="topright" placeholder="e.g. 5 3"><br><br>
+  <label>Initial Position:</label> 
+  <input id="initialpos" type="text" name="initialpos" placeholder="e.g. 1 1 E"><br>
+  <label>Instruction:</label> 
+  <input id="instruction" type="text" name="instruction" placeholder="e.g. RFRFRFRF"><br><br>
+</form> 
+
+<button onclick="myFunction()">Move Robot</button><br><br>
+
+Steps:
+<p id="steps"></p>
+
+Result:
+<p id="output"></p>
+
+<script>
+
+var scents = new Array();
+
+function myFunction() {
+
+    var topright = document.getElementById("topright").value.split(" ");
+    var toprightx = topright[0];
+    var toprighty = topright[1];
+    
+    var initialpos = document.getElementById("initialpos").value.split(" ");
+    var x = initialpos[0];
+    var y = initialpos[1];
+    var o = initialpos[2];
+    
+    var instruction = document.getElementById("instruction").value.split("");
+
+    var i;
+    var output="";
+    var robotlost = false;
+    var steps="";
+    
+    for (i = 0; i < instruction.length ;i++) {
+         if (instruction[i]=="F"){
+	     if ((o=="N" || o=="S") && (getNewYPos(o,y,toprighty)!="LOST"))
+		y = getNewYPos(o,y,toprighty);
+	     else if ((o=="E" || o=="W") && (getNewXPos(o,x,toprightx)!="LOST"))
+		x = getNewXPos(o,x,toprightx);
+	     else if (scented(x,y))
+		continue;
+	     else{
+		robotlost = true;
+		scents.push([x,y]);
+		break;
+	     }	    
+	 }
+	 else if (instruction[i]=="L")
+		o = getOrientation(o,"L");
+	 else if (instruction[i]=="R")
+		o = getOrientation(o,"R");
+	 steps += "["+x+" "+y+" "+o+"],";
+    }
+    output = x+" "+y+" "+o;
+    if (robotlost==true)
+	output += " LOST";
+    document.getElementById("steps").innerHTML = steps;
+    document.getElementById("output").innerHTML = output;   
+}
+
+function getOrientation(orientation,rotation) {
+    if (orientation=="N")
+	if (rotation=="L") return "W";
+	else return "E";
+    else if (orientation=="S")
+	if (rotation=="L") return "E";
+	else return "W";
+    else if (orientation=="E")
+	if (rotation=="L") return "N";
+	else return "S";
+    else if (orientation=="W")
+	if (rotation=="L") return "S";
+	else return "N";
+}
+
+function getNewXPos(orientation,x,toprightx) {
+    if (orientation=="E" && !outOfGrid(+x+1,toprightx))
+	return +x+1;
+    else if (orientation=="W" && !outOfGrid(+x-1,toprightx))
+	return +x-1;
+    else
+	return "LOST";
+}
+
+function getNewYPos(orientation,y,toprighty) {
+    if (orientation=="N" && !outOfGrid(+y+1,toprighty))
+	return +y+1;
+    else if (orientation=="S" && !outOfGrid(+y-1,toprighty))
+	return +y-1;
+    else
+	return "LOST";
+}
+
+function outOfGrid(p,max) {
+    if (p>max || p<0)
+	return true;
+    return false;
+}
+
+function scented(x,y){
+    var i;
+    for (i=0;i<scents.length;i++){
+	if (scents[i][0]==x && scents[i][1]==y)
+	    return true;
+    }
+}
+
+</script>
+
+</body>
+</html>
