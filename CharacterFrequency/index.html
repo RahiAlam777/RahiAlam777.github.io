@@ -1,1 +1,131 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+    <title>Character Frequency</title>
+
+    <style>
+
+        body, html {
+            font-family: "Proxima-nova",arial;
+            line-height: 1.5;
+            font-size: 18px;
+            text-align:center;
+            color:#585858;
+        }
+
+        div, h1 {
+            display: inline-block;
+        }
+
+        .boxtitle {
+            max-width: 723px;
+            margin: 0 auto;
+            background-color: #ed008a;
+            text-align: center;
+            padding: 10px;
+            vertical-align: top;
+            color:#fff;
+        }
+
+        textarea {
+           resize: none;
+        }
+
+        button {
+            outline: 20px;
+            outline-color: #ed008a;
+            cursor: pointer;
+            border: 1px solid #ed008a;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            color: #585858;
+            background-color:#fff;
+        }
+
+        button:hover { 
+            color:#fff;
+            background-color: #ed008a;
+        }
+
+        /*.logo{
+            padding-left:220px;
+            width:50px;
+            height:auto;
+            display: inline-block;
+        }*/
+    </style>
+</head>
+
+<body>
+
+<h1>Character Frequency Counter</h1>
+
+<form id="inputform" >
+
+    <div> 
+        <p class="boxtitle">Text</p> 
+        <textarea id="inputbox" rows="30" cols="100" name="inputbox" placeholder="Enter text here!"></textarea>
+    </div>
+    <div>
+        <p class="boxtitle">Output</p> 
+        <textarea id="outputbox" rows="30" name="outputbox" readonly placeholder="letter:frequency"></textarea>
+    </div>
+
+</form> 
+
+<button onclick="myFunction()">Calculate</button><br><br>
+
+<script>
+
+    function myFunction() {
+
+        var text = document.getElementById("inputbox").value;
+        var chars = text.split("");
+        var key;
+        var dict = {};
+        var lettercount;
+          
+        for (i = 0; i < chars.length; i++){
+            key = getKey(chars[i].toLowerCase());
+            lettercount = dict[key];
+            if (lettercount == undefined)
+                dict[key] = 1;
+            else
+                dict[key] += 1;
+        }
+
+        var output = "";
+
+        for (i = 0; i <= 25; i++){
+            if (dict[97+i] != undefined)
+                output += String.fromCharCode(97+i) + ":" + dict[97+i] + "\n";
+        }
+          
+        if (output == "")
+            document.getElementById("outputbox").value = "No alphabetical characters found!";
+        else
+            document.getElementById("outputbox").value = output;
+    }
+
+    function getKey(ch) {
+        return ch.charCodeAt(0);
+    }
+
+</script>
+
+
+<!--
+Extension task:
+
+- Number of Characters and Words
+- Most frequent Character?
+- 
+
+-->
+
+
+</body>
+</html>
