@@ -2,87 +2,37 @@
 <html>
 
 <head>
-    <title>Character Frequency</title>
-
-    <style>
-
-        body, html {
-            font-family: "Proxima-nova",arial;
-            line-height: 1.5;
-            font-size: 18px;
-            text-align:center;
-            color:#585858;
-        }
-
-        div, h1 {
-            display: inline-block;
-        }
-
-        .boxtitle {
-            max-width: 723px;
-            margin: 0 auto;
-            background-color: #ed008a;
-            text-align: center;
-            padding: 10px;
-            vertical-align: top;
-            color:#fff;
-        }
-
-        textarea {
-           resize: none;
-        }
-
-        button {
-            outline: 20px;
-            outline-color: #ed008a;
-            cursor: pointer;
-            border: 1px solid #ed008a;
-            padding-top: 10px;
-            padding-bottom: 10px;
-            padding-left: 15px;
-            padding-right: 15px;
-            color: #585858;
-            background-color:#fff;
-        }
-
-        button:hover { 
-            color:#fff;
-            background-color: #ed008a;
-        }
-
-        /*.logo{
-            padding-left:220px;
-            width:50px;
-            height:auto;
-            display: inline-block;
-        }*/
-    </style>
+<link rel="stylesheet" type="text/css" href="css.css">
 </head>
 
 <body>
 
-<h1>Character Frequency Counter</h1>
+    <h1>Character Frequency Counter</h1>
 
-<form id="inputform" >
+    <form>
+        <div> 
+            <p class="boxtitle">Text Box</p> 
+            <textarea id="inputbox" rows="28" cols="100" name="inputbox" placeholder="Enter text here!"></textarea>
+        </div>
 
-    <div> 
-        <p class="boxtitle">Text</p> 
-        <textarea id="inputbox" rows="30" cols="100" name="inputbox" placeholder="Enter text here!"></textarea>
-    </div>
-    <div>
-        <p class="boxtitle">Output</p> 
-        <textarea id="outputbox" rows="30" name="outputbox" readonly placeholder="letter:frequency"></textarea>
-    </div>
+        <div class="detailsbox">
+            <p class="boxtitle">Output</p> 
+            <textarea id="outputbox" rows="28" name="outputbox" readonly placeholder="letter:frequency"></textarea>
+        </div>
+    </form>
+    
+    
+        <p class="boxtitleother">Other Details</p> 
+        <textarea id="detailsbox" rows="2" cols="82" name="detailsbox" readonly></textarea>
+    
+        <button onclick="main()">Calculate</button><br><br>
 
-</form> 
-
-<button onclick="myFunction()">Calculate</button><br><br>
 
 <script>
 
-    function myFunction() {
+    function main() {
 
-        var text = document.getElementById("inputbox").value;
+        var text = document.getElementById("inputbox").value.trim();
         var chars = text.split("");
         var key;
         var dict = {};
@@ -98,34 +48,65 @@
         }
 
         var output = "";
+        var totalletters = 0;
 
-        for (i = 0; i <= 25; i++){
-            if (dict[97+i] != undefined)
-                output += String.fromCharCode(97+i) + ":" + dict[97+i] + "\n";
+        for (i = 97; i <= 122; i++){
+            if (dict[i] != undefined){
+                output += String.fromCharCode(i) + ":" + dict[i] + "\n";
+                totalletters += dict[i];
+            }
         }
           
         if (output == "")
             document.getElementById("outputbox").value = "No alphabetical characters found!";
         else
             document.getElementById("outputbox").value = output;
+
+        printOtherDetails(text, chars, totalletters, dict);
     }
 
     function getKey(ch) {
         return ch.charCodeAt(0);
     }
 
+    function getTotalChars(chars) {
+        return chars.length;
+    }
+
+    function getTotalWords(text){
+        if (text.length == 0)
+            return 0;
+        var totalwords = text.trim().split(/\s+/);
+        return totalwords.length;
+    }
+
+    function getMostFrequentLetter(dict){
+        var highest = 0;
+        var letter = "none";
+        for (i = 97; i <= 122; i++){
+            if (dict[i] != undefined && dict[i] > highest){
+                highest = dict[i];
+                letter = String.fromCharCode(i);
+            }
+        }
+        return letter;
+    }
+
+    function printOtherDetails(text, chars, totalletters, dict){
+        var details = "";
+        details += "Total Words: " + getTotalWords(text) + ", ";
+        details += "Total Characters: " + getTotalChars(chars) + ", ";
+        details += "Total Letters: " + totalletters + ",\n";
+
+        var letter = getMostFrequentLetter(dict);
+
+        if(letter != "none")
+            details += "Most Frequent letter: " + letter + " (" + dict[getKey(letter)] + " times).";
+
+        document.getElementById("detailsbox").value = details;
+    }
+
 </script>
-
-
-<!--
-Extension task:
-
-- Number of Characters and Words
-- Most frequent Character?
-- 
-
--->
-
 
 </body>
 </html>
