@@ -1,0 +1,58 @@
+body, html {
+            font-family: "Proxima-nova",arial;
+            line-height: 1.5;
+            font-size: 18px;
+            text-align:center;
+            color:#585858;
+        }
+
+div, h1 {
+    display: inline-block;
+}
+
+.boxtitle {
+    margin: 0 auto;
+    background-color: #ed008a;
+    text-align: center;
+    padding: 10px;
+    vertical-align: top;
+    color:#fff;
+}
+
+.boxtitleother {
+    margin: 0 auto;
+    background-color: #ed008a;
+    padding-top: 6px;
+    text-align: center;
+    vertical-align: top;
+    color:#fff;
+    min-width: 120px;
+    height: 30px;
+    display: inline-block;
+    font-size: 17px;
+}
+
+textarea {
+   resize: none;
+}
+
+button {
+    outline: 20px;
+    outline-color: #ed008a;
+    cursor: pointer;
+    border: 1px solid #ed008a;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:#fff;
+    background-color: #ed008a;
+    width: 162px;
+    height: 36px;
+    vertical-align: top;
+}
+
+button:hover { 
+    color: #585858;
+    background-color:#fff;
+}
