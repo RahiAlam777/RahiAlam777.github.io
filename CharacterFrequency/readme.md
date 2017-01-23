@@ -1,6 +1,6 @@
 # Character Frequency Counter
 
-A program that counters the frequency of characters by Rahi Alam.
+A program that counts the frequency of characters by Rahi Alam.
 
 ## Installation
 
