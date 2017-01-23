@@ -57,7 +57,6 @@
 
 
 
-
     function getKey(ch) {
         return ch.charCodeAt(0);
     }
@@ -93,16 +92,23 @@
         return lettercount;
     }
 
-    function getMostFrequentLetter(charstore) {
+    function getMostFrequentLetters(charstore) {
         var highest = 0;
-        var letter = "none";
+        var key = 0;
+        var letters = new Array();
         for (i = 97; i <= 122; i++){
             if (charstore[i] != undefined && charstore[i] > highest){
                 highest = charstore[i];
-                letter = String.fromCharCode(i);
+                key = i;
             }
         }
-        return letter;
+        if (key != 0){
+            for (j = key; j <= 122; j++){
+                if (charstore[key] == charstore[j])
+                    letters.push(String.fromCharCode(j)); 
+            }
+        }
+        return letters;
     }
 
     function overLimit(chars) {
@@ -125,14 +131,15 @@
 
     function printOtherDetails(text, chars, totalletters, charstore) {
         var details = "";
-        var letter = getMostFrequentLetter(charstore);
+        var mostfreqletters = getMostFrequentLetters(charstore);
         
         details += "Total Words: " + getTotalWords(text) + ", ";
         details += "Total Characters: " + getTotalChars(chars) + ", ";
-        details += "Total Letters: " + totalletters + ",\n";
+        details += "Total Letters: " + totalletters + ".\n";
 
-        if(letter != "none")
-            details += "Most Frequent letter: " + letter + " (" + charstore[getKey(letter)] + " times).";
+        if(mostfreqletters[0] != null){
+            details += "Most Frequent letters: " + mostfreqletters + " (" + charstore[getKey(mostfreqletters[0])] + " times).";
+        }
 
         document.getElementById("detailsbox").value = details;
     }
