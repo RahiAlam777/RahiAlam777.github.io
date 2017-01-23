@@ -21,11 +21,11 @@
         </div>
     </form>
     
-    
-        <p class="boxtitleother">Other Details</p> 
-        <textarea id="detailsbox" rows="2" cols="82" name="detailsbox" readonly></textarea>
-    
-        <button onclick="main()">Calculate</button><br><br>
+    <p class="boxtitleother">Other Details</p> 
+
+    <textarea id="detailsbox" rows="2" cols="82" name="detailsbox" readonly></textarea>
+
+    <button onclick="main()">Calculate</button><br><br>
 
 
 <script>
@@ -36,37 +36,39 @@
         var chars = text.split("");
         var key;
         var dict = {};
-        var lettercount;
+        var totalletters = 0;
           
         for (i = 0; i < chars.length; i++){
             key = getKey(chars[i].toLowerCase());
-            lettercount = dict[key];
-            if (lettercount == undefined)
+            if (dict[key] == undefined)
                 dict[key] = 1;
             else
                 dict[key] += 1;
         }
 
-        var output = "";
-        var totalletters = 0;
-
-        for (i = 97; i <= 122; i++){
-            if (dict[i] != undefined){
-                output += String.fromCharCode(i) + ":" + dict[i] + "\n";
-                totalletters += dict[i];
-            }
-        }
+        var outputstring = getOutputString(dict, totalletters);
           
-        if (output == "")
+        if (outputstring == "")
             document.getElementById("outputbox").value = "No alphabetical characters found!";
         else
-            document.getElementById("outputbox").value = output;
+            document.getElementById("outputbox").value = outputstring;
 
         printOtherDetails(text, chars, totalletters, dict);
     }
 
     function getKey(ch) {
         return ch.charCodeAt(0);
+    }
+
+    function getOutputString(dict, totalletters) {
+        var output = "";
+        for (i = 97; i <= 122; i++){
+            if (dict[i] != undefined){
+                output += String.fromCharCode(i) + ":" + dict[i] + "\n";
+                totalletters += dict[i];
+            }
+        }
+        return output;
     }
 
     function getTotalChars(chars) {
@@ -94,11 +96,11 @@
 
     function printOtherDetails(text, chars, totalletters, dict){
         var details = "";
+        var letter = getMostFrequentLetter(dict);
+        
         details += "Total Words: " + getTotalWords(text) + ", ";
         details += "Total Characters: " + getTotalChars(chars) + ", ";
         details += "Total Letters: " + totalletters + ",\n";
-
-        var letter = getMostFrequentLetter(dict);
 
         if(letter != "none")
             details += "Most Frequent letter: " + letter + " (" + dict[getKey(letter)] + " times).";
