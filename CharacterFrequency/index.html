@@ -71,8 +71,8 @@
         return output;
     }
 
-    function getTotalChars(chars) {
-        return chars.length;
+    function getTotalChars(text) {
+      return text.replace(/\s/g,"").length;
     }
 
     function getTotalWords(text) {
@@ -134,7 +134,7 @@
         var mostfreqletters = getMostFrequentLetters(charstore);
         
         details += "Total Words: " + getTotalWords(text) + ", ";
-        details += "Total Characters: " + getTotalChars(chars) + ", ";
+        details += "Total Characters: " + getTotalChars(text) + ", ";
         details += "Total Letters: " + totalletters + ".\n";
 
         if(mostfreqletters[0] != null){
